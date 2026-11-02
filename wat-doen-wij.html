@@ -252,9 +252,45 @@
       font-weight: 700;
     }
 
+
+    /* ---------- cirkels met pictogrammen (zelfde als homepage) ---------- */
+    .orbit {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 1;
+      justify-self: center;
+      align-self: start;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      inset: 9%;
+      border: 3px solid var(--yellow);
+      border-radius: 50%;
+    }
+
+    .sticker {
+      position: absolute;
+      left: var(--l); top: var(--t);
+      width: var(--s);
+      height: auto;
+      aspect-ratio: 1;
+      display: block;
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px var(--green);
+      animation: pop 560ms cubic-bezier(.2, 1.35, .4, 1) both;
+      animation-delay: calc(120ms + var(--i) * 90ms);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sticker { animation: none; }
+    }
+
     @media (max-width: 860px) {
       .what { grid-template-columns: 1fr; gap: 36px; }
-      .what .photo { order: -1; }
+      .what .orbit { order: -1; max-width: 360px; }
     }
 
     @media (max-width: 760px) {
@@ -335,7 +371,14 @@
         <p>Mocht u interesse hebben, dan kunt u contact opnemen door op onderstaande knop te klikken.</p>
       </div>
 
-      <img class="photo" src="bedrijfslogo.jpg" alt="Profielfoto BuurthulpDeventer">
+      <div class="orbit" aria-hidden="true">
+        <img class="sticker" src="icoon-tas.png" alt="" width="354" height="354" style="--i:0; --l:6%; --t:4%; --s:34%;">
+        <img class="sticker" src="icoon-hond.png" alt="" width="354" height="354" style="--i:1; --l:52%; --t:0%; --s:30%;">
+        <img class="sticker" src="icoon-tablet.png" alt="" width="354" height="354" style="--i:2; --l:0%; --t:40%; --s:30%;">
+        <img class="sticker" src="icoon-mand.png" alt="" width="354" height="354" style="--i:3; --l:62%; --t:32%; --s:36%;">
+        <img class="sticker" src="icoon-planten.png" alt="" width="354" height="354" style="--i:4; --l:24%; --t:62%; --s:34%;">
+        <img class="sticker" src="icoon-tuin.png" alt="" width="354" height="354" style="--i:5; --l:68%; --t:72%; --s:26%;">
+      </div>
     </section>
 
     <div class="pager">
