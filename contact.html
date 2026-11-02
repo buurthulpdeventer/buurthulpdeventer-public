@@ -312,6 +312,15 @@
       transition: transform 160ms ease;
     }
 
+
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .form-status { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 700; }
+    .form-status:empty { display: none; }
+    .form-status.is-success { padding: 14px 18px; border-radius: 20px; background: var(--black); color: var(--yellow); }
+    .form-status.is-error { padding: 14px 18px; border-radius: 20px; background: var(--cream); color: var(--black); border: 2px solid var(--black); }
+    .submit:disabled { opacity: 0.6; cursor: wait; }
+
     .submit:hover { transform: translateY(-2px); }
     .submit:focus-visible { outline: 4px solid var(--cream); outline-offset: 4px; }
 
@@ -398,40 +407,48 @@
 
       <div class="contact-card">
         <h2>Contactgegevens</h2>
-        <form action="mailto:buurthulpdeventer@gmail.com" method="post" enctype="text/plain">
+        <form id="contact-form">
           <div class="row">
             <label>Voornaam *
-              <input type="text" name="Voornaam" autocomplete="given-name" required>
+              <input type="text" name="voornaam" autocomplete="given-name" required>
             </label>
             <label>Achternaam *
-              <input type="text" name="Achternaam" autocomplete="family-name" required>
+              <input type="text" name="achternaam" autocomplete="family-name" required>
             </label>
           </div>
 
           <div class="row">
             <label>E-mailadres *
-              <input type="email" name="E-mailadres" autocomplete="email" required>
+              <input type="email" name="email" autocomplete="email" required>
             </label>
             <label>Adres
-              <input type="text" name="Adres" autocomplete="street-address">
+              <input type="text" name="adres" autocomplete="street-address">
             </label>
           </div>
 
           <label>Telefoonnummer *
-            <input type="tel" name="Telefoonnummer" autocomplete="tel" required>
+            <input type="tel" name="telefoon" autocomplete="tel" required>
           </label>
 
           <label>Hoe lang denkt u dat wij met de klus bezig zijn?
-            <input type="text" name="Tijdsinschatting">
+            <input type="text" name="tijdsinschatting">
           </label>
 
           <label>Leg zo kort mogelijk uit waarbij u hulp nodig heeft *
-            <textarea name="Hulpvraag" required></textarea>
+            <textarea name="hulpvraag" required></textarea>
           </label>
 
           <p class="form-note">Lees in onze <a href="privacyverklaring.html">privacyverklaring</a> hoe wij met uw gegevens omgaan.</p>
 
+          <!-- Verborgen veld tegen spam: laat leeg. De naam moet gelijk zijn aan de honeypot-naam in RG Forms (zie HONEYPOT_NAME onderaan). -->
+          <div class="hp" aria-hidden="true">
+            <label>Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
           <button class="submit" type="submit">Versturen</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
 
@@ -517,6 +534,73 @@
       if (event.key === 'Escape') {
         closeMenu();
         menuButton.focus();
+      }
+    });
+  </script>
+  <script>
+    /* ===== INVULLEN: plak hier de Script-URL van RG Forms (eindigt op /exec) ===== */
+    const FORM_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhkFiwd049gPkP3kzRRx642ZMc8JXzsAjpLrEKxARC0xPm12o9umjxMptdpZug7f04cg/exec';
+    /* Naam van het tabblad/formulier in RG Forms (standaard: contact) */
+    const FORM_TAB = 'contact';
+    /* Naam van het honeypot-veld in RG Forms. Zet hier dezelfde naam als in RG Forms, en pas ook name="website" in het formulier aan. */
+    const HONEYPOT_NAME = 'website';
+
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('form-status');
+    const submitBtn = form.querySelector('.submit');
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = 'form-status' + (type ? ' is-' + type : '');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      if (FORM_SCRIPT_URL.indexOf('PLAK_HIER') === 0) {
+        showStatus('Het formulier is nog niet gekoppeld. Mail ons via het adres hieronder.', 'error');
+        return;
+      }
+
+      const fields = {};
+      new FormData(form).forEach((value, key) => {
+        fields[key] = String(value).trim();
+      });
+      if (HONEYPOT_NAME !== 'website' && 'website' in fields) {
+        fields[HONEYPOT_NAME] = fields.website;
+        delete fields.website;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Bezig met versturen…';
+      showStatus('', '');
+
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+
+      try {
+        const response = await fetch(FORM_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ tab: FORM_TAB, fields: fields }),
+          signal: controller.signal
+        });
+        const data = await response.json();
+
+        if (data.result === 'success') {
+          form.reset();
+          showStatus('Bedankt! Wij hebben uw bericht ontvangen en nemen zo snel mogelijk contact met u op.', 'success');
+        } else {
+          throw new Error(data.error || 'Onbekende fout');
+        }
+      } catch (error) {
+        console.error(error);
+        showStatus('Het versturen is niet gelukt. Probeer het later opnieuw, of mail of bel ons via de gegevens hieronder.', 'error');
+      } finally {
+        clearTimeout(timer);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Versturen';
       }
     });
   </script>
