@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hulp bij een klus aanvragen | BuurthulpDeventer</title>
+  <meta name="description" content="Een klein klusje in Deventer of omgeving? Neem contact op met BuurthulpDeventer via het formulier, telefoon of WhatsApp. Wij bespreken graag uw hulpvraag.">
+  <style>
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/fredoka-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/fredoka-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/nunito-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/nunito-latin-700-normal.woff2") format("woff2"); }
+
+    :root {
+      --green: #24ae94;
+      --yellow: #fff69a;
+      --cream: #fff9d8;
+      --black: #050505;
+      --display: "Fredoka", "Trebuchet MS", "Segoe UI", sans-serif;
+      --body: "Nunito", "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; background: var(--green); }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--black);
+      background: var(--green);
+      font-family: var(--body);
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 36px 56px 48px;
+      overflow-x: hidden;
+    }
+
+    /* ---------- menu ---------- */
+    .menu-wrap { position: relative; width: max-content; line-height: 0; z-index: 10; }
+
+    .menu-button {
+      width: 64px; height: 50px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 0; border: 0; background: transparent; cursor: pointer;
+    }
+
+    .menu-button span {
+      display: block; width: 64px; height: 4px;
+      background: var(--yellow); border-radius: 3px;
+    }
+
+    .menu-button:focus-visible { outline: 3px solid var(--cream); outline-offset: 8px; }
+
+    .menu-panel {
+      position: absolute; top: 70px; left: 0;
+      width: min(78vw, 340px);
+      display: grid; gap: 12px; padding: 20px;
+      border-radius: 26px; background: var(--yellow);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.16);
+      opacity: 0; pointer-events: none; transform: translateY(-8px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .menu-panel.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    .menu-panel a {
+      color: var(--black); text-decoration: none;
+      font-size: 24px; line-height: 1.2; padding: 10px 6px;
+    }
+
+    .menu-panel a:hover,
+    .menu-panel a:focus-visible { text-decoration: underline; outline: none; }
+
+    /* ---------- titel ---------- */
+    h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(2.8rem, 7.6vw, 5.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      color: var(--yellow);
+    }
+
+    .title-line { height: 3px; background: var(--yellow); }
+
+
+    @keyframes pop {
+      from { transform: scale(0.35); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .site-header {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas: "menu title corner" ". line line";
+      column-gap: 24px;
+      row-gap: 18px;
+      align-items: center;
+    }
+
+    .site-header .menu-wrap { grid-area: menu; }
+    .site-header h1 { grid-area: title; min-width: 0; }
+    .site-header .title-line { grid-area: line; }
+
+    .corner {
+      grid-area: corner;
+      display: block;
+      width: clamp(76px, 11vw, 150px);
+      height: auto;
+      aspect-ratio: 1;
+      margin: 6px;
+      border-radius: 50%;
+      outline: 3px solid var(--yellow);
+      outline-offset: 6px;
+      animation: pop 560ms cubic-bezier(.2, 1.35, .4, 1) both;
+      animation-delay: 120ms;
+    }
+
+
+    .menu-panel a[aria-current="page"] {
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 6px;
+    }
+
+    /* ---------- tekst en onderdelen ---------- */
+    .content { margin-top: 52px; }
+
+    .text p {
+      margin: 0 0 1em;
+      max-width: 30em;
+      font-size: 26px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .text p:last-child { margin-bottom: 0; }
+
+    .photo {
+      width: 100%;
+      display: block;
+      aspect-ratio: 793 / 695;
+      object-fit: cover;
+      border-radius: 44px;
+    }
+
+    /* ---------- knoppen onderaan ---------- */
+    .pager {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .go {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 26px 34px;
+      border-radius: 44px;
+      background: var(--yellow);
+      color: var(--black);
+      text-decoration: none;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 1.1;
+      transition: transform 160ms ease;
+    }
+
+    .go .badge {
+      width: 52px; height: 52px; flex: none;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--yellow);
+      font-family: var(--body);
+      font-size: 26px; line-height: 1;
+      transition: transform 160ms ease;
+    }
+
+    .go:hover { transform: translateY(-3px); }
+    .go:hover .badge { transform: translateX(4px); }
+    .go--back:hover .badge { transform: translateX(-4px); }
+    .go:focus-visible { outline: 4px solid var(--cream); outline-offset: 4px; }
+
+    .go--dark { background: var(--black); color: var(--yellow); }
+    .go--dark .badge { background: var(--yellow); color: var(--black); }
+
+    /* ---------- socials ---------- */
+    .socials { display: flex; justify-content: center; gap: 22px; margin-top: 56px; }
+
+    .socials a {
+      width: 42px; height: 42px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--black); text-decoration: none;
+    }
+
+    .socials svg { width: 100%; height: 100%; display: block; }
+
+    /* ---------- mobiel ---------- */
+    @media (max-width: 760px) {
+      .page { padding: 32px 22px 36px; }
+      .menu-button, .menu-button span { width: 48px; }
+      .menu-button { height: 38px; }
+      .menu-button span { height: 3px; }
+      .menu-panel { top: 56px; }
+      .content { margin-top: 40px; }
+      .text p { font-size: 22px; }
+      .photo { border-radius: 34px; }
+      .pager { grid-template-columns: 1fr; margin-top: 48px; gap: 16px; }
+      .go { padding: 22px 26px; border-radius: 38px; font-size: 26px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .corner { animation: none; }
+      .go, .go .badge, .menu-panel { transition: none; }
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      grid-template-areas: "intro card" "direct card";
+      grid-template-rows: auto 1fr;
+      gap: 32px 56px;
+      align-items: start;
+    }
+    .contact .intro  { grid-area: intro; }
+    .contact .direct { grid-area: direct; }
+    .contact-card    { grid-area: card; }
+
+    .direct a {
+      color: var(--black);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card {
+      padding: 34px 38px 38px;
+      border-radius: 44px;
+      background: var(--yellow);
+    }
+
+    .contact-card h2 {
+      margin: 0 0 26px;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    form { display: grid; gap: 22px; }
+
+    .form-note { margin: 0; font-size: 18px; line-height: 1.4; }
+    .form-note a { color: var(--black); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 0;
+      border-bottom: 2px solid rgba(5, 5, 5, 0.55);
+      border-radius: 0;
+      padding: 8px 2px 8px;
+      background: transparent;
+      color: var(--black);
+      font: inherit;
+      font-size: 22px;
+      font-weight: 400;
+      outline: none;
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    input:focus, textarea:focus {
+      border-bottom-color: var(--black);
+      box-shadow: 0 2px 0 var(--black);
+    }
+
+    .submit {
+      justify-self: start;
+      min-height: 60px;
+      margin-top: 8px;
+      padding: 0 40px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--black);
+      color: var(--yellow);
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 26px;
+      cursor: pointer;
+      transition: transform 160ms ease;
+    }
+
+
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .form-status { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 700; }
+    .form-status:empty { display: none; }
+    .form-status.is-success { padding: 14px 18px; border-radius: 20px; background: var(--black); color: var(--yellow); }
+    .form-status.is-error { padding: 14px 18px; border-radius: 20px; background: var(--cream); color: var(--black); border: 2px solid var(--black); }
+    .submit:disabled { opacity: 0.6; cursor: wait; }
+
+    .submit:hover { transform: translateY(-2px); }
+    .submit:focus-visible { outline: 4px solid var(--cream); outline-offset: 4px; }
+
+    @media (max-width: 960px) {
+      .row { grid-template-columns: 1fr; gap: 22px; }
+    }
+
+    @media (max-width: 860px) {
+      .contact {
+        grid-template-columns: 1fr;
+        grid-template-areas: "intro" "card" "direct";
+      }
+    }
+
+    @media (max-width: 760px) {
+      .contact-card { padding: 26px 24px 30px; border-radius: 34px; }
+      .contact-card h2 { font-size: 28px; }
+      label { font-size: 18px; }
+      input, textarea { font-size: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { .submit { transition: none; } }
+
+    @media (max-width: 760px) {
+      .site-header {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas: "menu title" ". line";
+        column-gap: 16px;
+        row-gap: 14px;
+      }
+      .corner { display: none; }
+      h1 { font-size: clamp(2rem, 8.6vw, 2.8rem); }
+    }
+
+    /* ---------- juridische links onderaan ---------- */
+    .legal {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 6px 28px;
+      margin-top: 22px;
+    }
+
+    .legal a {
+      padding: 8px 4px;
+      color: var(--black);
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    .legal a:hover { text-decoration-thickness: 3px; }
+    .legal a:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; border-radius: 4px; }
+  </style>
+  <link rel="canonical" href="https://buurthulpdeventer.com/contact">
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <div class="menu-wrap">
+        <button class="menu-button" type="button" aria-label="Menu" aria-controls="site-menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="menu-panel" id="site-menu" aria-label="Menu" hidden>
+        <a href="/">Home</a>
+        <a href="/wie-zijn-wij">Wie zijn wij?</a>
+        <a href="/wat-doen-wij">Wat doen wij?</a>
+        <a href="/tarieven">Tarieven</a>
+        <a href="/contact" aria-current="page">Neem contact op</a>
+        </nav>
+      </div>
+
+      <h1>Neem contact op</h1>
+      <img class="corner" src="icoon-tablet.png" alt="" width="354" height="354">
+      <div class="title-line" aria-hidden="true"></div>
+    </header>
+
+    <section class="content contact" aria-label="Contact">
+      <div class="text intro">
+        <p>Als u uw gegevens achterlaat, nemen wij zo snel mogelijk contact met u op.</p>
+      </div>
+
+      <div class="contact-card">
+        <h2>Contactgegevens</h2>
+        <form id="contact-form">
+          <div class="row">
+            <label>Voornaam *
+              <input type="text" name="voornaam" autocomplete="given-name" required>
+            </label>
+            <label>Achternaam *
+              <input type="text" name="achternaam" autocomplete="family-name" required>
+            </label>
+          </div>
+
+          <div class="row">
+            <label>E-mailadres *
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label>Adres
+              <input type="text" name="adres" autocomplete="street-address">
+            </label>
+          </div>
+
+          <label>Telefoonnummer *
+            <input type="tel" name="telefoon" autocomplete="tel" required>
+          </label>
+
+          <label>Hoe lang denkt u dat wij met de klus bezig zijn?
+            <input type="text" name="tijdsinschatting">
+          </label>
+
+          <label>Leg zo kort mogelijk uit waarbij u hulp nodig heeft *
+            <textarea name="hulpvraag" required></textarea>
+          </label>
+
+          <p class="form-note">Lees in onze <a href="/privacyverklaring">privacyverklaring</a> hoe wij met uw gegevens omgaan.</p>
+
+          <!-- Verborgen veld tegen spam: laat leeg. De naam moet gelijk zijn aan de honeypot-naam in RG Forms (zie HONEYPOT_NAME onderaan). -->
+          <div class="hp" aria-hidden="true">
+            <label>Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
+          <button class="submit" type="submit">Versturen</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="text direct">
+        <p>U kunt ons ook mailen via: <a href="mailto:buurthulpdeventer@gmail.com">buurthulpdeventer@gmail.com</a> of bellen via: <a href="tel:0570-756230">(0570)-756230</a></p>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="go go--back" href="/">
+        <span>Home</span>
+        <span class="badge" aria-hidden="true">←</span>
+      </a>
+    </div>
+
+    <footer class="socials" aria-label="Social media">
+      <a href="https://www.facebook.com/profile.php?id=61590582818465" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="#1877f2" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.49 0-1.956.931-1.956 1.887v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+          <path fill="#fff" d="m16.671 15.563.532-3.49h-3.328V9.808c0-.956.466-1.887 1.956-1.887h1.513v-2.97s-1.374-.235-2.686-.235c-2.741 0-4.533 1.672-4.533 4.697v2.66H7.078v3.49h3.047V24a12.13 12.13 0 0 0 3.75 0v-8.437h2.796z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/buurthulpdeventer/" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <defs>
+            <radialGradient id="instagram-gradient-nieuw" cx="30%" cy="107%" r="150%">
+              <stop offset="0" stop-color="#fdf497"/>
+              <stop offset="0.05" stop-color="#fdf497"/>
+              <stop offset="0.45" stop-color="#fd5949"/>
+              <stop offset="0.6" stop-color="#d6249f"/>
+              <stop offset="0.9" stop-color="#285aeb"/>
+            </radialGradient>
+          </defs>
+          <rect width="24" height="24" rx="6" fill="url(#instagram-gradient-nieuw)"/>
+          <path fill="#fff" d="M12 7.35A4.65 4.65 0 1 0 12 16.65 4.65 4.65 0 0 0 12 7.35zm0 7.68A3.03 3.03 0 1 1 12 8.97a3.03 3.03 0 0 1 0 6.06zm5.91-7.86a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0z"/>
+          <path fill="#fff" d="M12 4.8c2.34 0 2.62.01 3.55.05.86.04 1.33.18 1.64.3.41.16.71.35 1.02.66.31.31.5.61.66 1.02.12.31.26.78.3 1.64.04.93.05 1.21.05 3.55s-.01 2.62-.05 3.55c-.04.86-.18 1.33-.3 1.64-.16.41-.35.71-.66 1.02-.31.31-.61.5-1.02.66-.31.12-.78.26-1.64.3-.93.04-1.21.05-3.55.05s-2.62-.01-3.55-.05c-.86-.04-1.33-.18-1.64-.3a2.74 2.74 0 0 1-1.02-.66 2.74 2.74 0 0 1-.66-1.02c-.12-.31-.26-.78-.3-1.64-.04-.93-.05-1.21-.05-3.55s.01-2.62.05-3.55c.04-.86.18-1.33.3-1.64.16-.41.35-.71.66-1.02.31-.31.61-.5 1.02-.66.31-.12.78-.26 1.64-.3.93-.04 1.21-.05 3.55-.05zm0-1.58c-2.38 0-2.68.01-3.62.05-.94.04-1.58.19-2.14.41a4.31 4.31 0 0 0-1.56 1.02 4.31 4.31 0 0 0-1.02 1.56c-.22.56-.37 1.2-.41 2.14-.04.94-.05 1.24-.05 3.62s.01 2.68.05 3.62c.04.94.19 1.58.41 2.14.23.58.54 1.08 1.02 1.56.48.48.98.79 1.56 1.02.56.22 1.2.37 2.14.41.94.04 1.24.05 3.62.05s2.68-.01 3.62-.05c.94-.04 1.58-.19 2.14-.41a4.31 4.31 0 0 0 1.56-1.02 4.31 4.31 0 0 0 1.02-1.56c.22-.56.37-1.2.41-2.14.04-.94.05-1.24.05-3.62s-.01-2.68-.05-3.62c-.04-.94-.19-1.58-.41-2.14a4.31 4.31 0 0 0-1.02-1.56 4.31 4.31 0 0 0-1.56-1.02c-.56-.22-1.2-.37-2.14-.41-.94-.04-1.24-.05-3.62-.05z"/>
+        </svg>
+      </a>
+      <!-- ===== WHATSAPP: vervang de link hieronder door jullie eigen WhatsApp-link (bijv. https://wa.me/31612345678) ===== -->
+      <a href="https://wa.me/31570756230" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect width="24" height="24" rx="6" fill="#25d366"/>
+          <path fill="#fff" transform="translate(4 4) scale(0.667)" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
+    </footer>
+
+    <nav class="legal" aria-label="Bedrijfsgegevens en privacy">
+      <a href="/bedrijfsgegevens">Bedrijfsgegevens</a>
+      <a href="/privacyverklaring">Privacyverklaring</a>
+      <a href="https://admin.buurthulpdeventer.com/"
+   target="_blank"
+   rel="noopener noreferrer">
+  Beheeromgeving
+</a>
+    </nav>
+  </main>
+  <script>
+    const menuButton = document.querySelector('.menu-button');
+    const menuPanel = document.querySelector('.menu-panel');
+
+    function closeMenu() {
+      menuPanel.classList.remove('is-open');
+      menuPanel.hidden = true;
+      menuButton.setAttribute('aria-expanded', 'false');
+    }
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+
+      if (isOpen) {
+        closeMenu();
+        return;
+      }
+
+      menuPanel.hidden = false;
+      menuPanel.classList.add('is-open');
+      menuButton.setAttribute('aria-expanded', 'true');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.menu-wrap')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+  </script>
+  <script>
+    /* ===== INVULLEN: plak hier de Script-URL van RG Forms (eindigt op /exec) ===== */
+    const FORM_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhkFiwd049gPkP3kzRRx642ZMc8JXzsAjpLrEKxARC0xPm12o9umjxMptdpZug7f04cg/exec';
+    /* Naam van het tabblad/formulier in RG Forms (standaard: contact) */
+    const FORM_TAB = 'contact';
+    /* Naam van het honeypot-veld in RG Forms. Zet hier dezelfde naam als in RG Forms, en pas ook name="website" in het formulier aan. */
+    const HONEYPOT_NAME = 'website';
+
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('form-status');
+    const submitBtn = form.querySelector('.submit');
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = 'form-status' + (type ? ' is-' + type : '');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      if (FORM_SCRIPT_URL.indexOf('PLAK_HIER') === 0) {
+        showStatus('Het formulier is nog niet gekoppeld. Mail ons via het adres hieronder.', 'error');
+        return;
+      }
+
+      const fields = {};
+      new FormData(form).forEach((value, key) => {
+        fields[key] = String(value).trim();
+      });
+      if (HONEYPOT_NAME !== 'website' && 'website' in fields) {
+        fields[HONEYPOT_NAME] = fields.website;
+        delete fields.website;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Bezig met versturen…';
+      showStatus('', '');
+
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+
+      try {
+        const response = await fetch(FORM_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ tab: FORM_TAB, fields: fields }),
+          signal: controller.signal
+        });
+        const data = await response.json();
+
+        if (data.result === 'success') {
+          form.reset();
+          showStatus('Bedankt! Wij hebben uw bericht ontvangen en nemen zo snel mogelijk contact met u op.', 'success');
+        } else {
+          throw new Error(data.error || 'Onbekende fout');
+        }
+      } catch (error) {
+        console.error(error);
+        showStatus('Het versturen is niet gelukt. Probeer het later opnieuw, of mail of bel ons via de gegevens hieronder.', 'error');
+      } finally {
+        clearTimeout(timer);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Versturen';
+      }
+    });
+  </script>
+</body>
+</html>
