@@ -1,0 +1,43 @@
+name: Controle openbare website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  website-code:
+    name: Controle HTML, SEO, links en bestanden
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controleer websitebestanden
+        run: node scripts/check-site.mjs
+
+  website-live:
+    name: Live website (informatief)
+    if: github.ref == 'refs/heads/main'
+    needs: website-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Controleer bereikbaarheid zonder data te versturen
+        shell: bash
+        run: |
+          set -uo pipefail
+          for url in \
+            'https://buurthulpdeventer.com/' \
+            'https://buurthulpdeventer.com/contact' \
+            'https://buurthulpdeventer.com/sitemap.xml' \
+            'https://buurthulpdeventer.com/robots.txt'; do
+            code=$(curl -L --silent --show-error --retry 2 --max-time 20 --output /dev/null --write-out '%{http_code}' "$url" || true)
+            if [[ "$code" == 2* ]]; then
+              echo "OK (HTTP $code): $url"
+            else
+              echo "::warning::Live website niet bevestigd (HTTP $code): $url"
+            fi
+          done
