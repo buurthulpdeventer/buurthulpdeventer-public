@@ -5,12 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tarieven voor kleine klusjes | BuurthulpDeventer</title>
   <meta name="description" content="Bekijk onze tarieven voor hulp bij kleine klusjes in Deventer en omgeving: €15 per uur en €0,25 per kilometer. Neem contact op voor uw hulpvraag.">
+  <meta name="theme-color" content="#24ae94">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:site_name" content="BuurthulpDeventer">
+  <meta property="og:title" content="Tarieven voor kleine klusjes | BuurthulpDeventer">
+  <meta property="og:description" content="Bekijk onze tarieven voor hulp bij kleine klusjes in Deventer en omgeving: €15 per uur en €0,25 per kilometer. Neem contact op voor uw hulpvraag.">
+  <meta property="og:url" content="https://buurthulpdeventer.com/tarieven">
+  <meta property="og:image" content="https://buurthulpdeventer.com/bedrijfslogo.jpg">
+  <meta property="og:image:alt" content="Logo van BuurthulpDeventer">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <style>
-    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/fredoka-latin-500-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/fredoka-latin-600-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/nunito-latin-400-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-latin-600-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/nunito-latin-700-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 500; font-display: swap; src: url("fredoka-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 600; font-display: swap; src: url("fredoka-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 400; font-display: swap; src: url("nunito-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("nunito-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 700; font-display: swap; src: url("nunito-latin-700-normal.woff2") format("woff2"); }
 
     :root {
       --green: #24ae94;
@@ -318,10 +329,26 @@
 
     .legal a:hover { text-decoration-thickness: 3px; }
     .legal a:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; border-radius: 4px; }
+  
+    /* Toegankelijkheid: toetsenbordnavigatie en mobiele aanraakdoelen. */
+    .skip-link {
+      position: fixed; top: 12px; left: 12px; z-index: 1000;
+      padding: 12px 16px; border: 2px solid var(--black); border-radius: 12px;
+      background: var(--yellow); color: var(--black); font-weight: 700;
+      transform: translateY(-180%); text-decoration: none;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .menu-panel[hidden] { display: none; }
+    .menu-panel a:focus-visible { outline: 3px solid var(--black); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .menu-button { min-height: 44px; }
+      .socials a { min-width: 44px; min-height: 44px; }
+    }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/tarieven">
 </head>
 <body>
+  <a class="skip-link" href="#inhoud">Direct naar inhoud</a>
   <main class="page">
     <header class="site-header">
       <div class="menu-wrap">
@@ -341,11 +368,11 @@
       </div>
 
       <h1>Tarieven</h1>
-      <img class="corner" src="icoon-mand.png" alt="" width="354" height="354">
+      <img class="corner" src="icoon-mand.png" alt="" width="354" height="354" decoding="async">
       <div class="title-line" aria-hidden="true"></div>
     </header>
 
-    <section class="content rates" aria-label="Tarieven van BuurthulpDeventer">
+    <section id="inhoud" tabindex="-1" class="content rates" aria-label="Tarieven van BuurthulpDeventer">
       <div class="text intro">
         <!-- ===== INTROTEKST: pas deze tekst aan ===== -->
         <p>Hieronder vindt u onze tarieven. Heeft u hierna nog vragen? Neem dan gerust contact met ons op.</p>

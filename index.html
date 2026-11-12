@@ -5,12 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kleine klusjes in Deventer | BuurthulpDeventer</title>
   <meta name="description" content="Hulp bij kleine klusjes in Deventer en omgeving. Van ophangen en schilderen tot tuinwerk, boodschappen en hulp met telefoon, tablet of computer.">
+  <meta name="theme-color" content="#24ae94">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:site_name" content="BuurthulpDeventer">
+  <meta property="og:title" content="Kleine klusjes in Deventer | BuurthulpDeventer">
+  <meta property="og:description" content="Hulp bij kleine klusjes in Deventer en omgeving. Van ophangen en schilderen tot tuinwerk, boodschappen en hulp met telefoon, tablet of computer.">
+  <meta property="og:url" content="https://buurthulpdeventer.com/">
+  <meta property="og:image" content="https://buurthulpdeventer.com/bedrijfslogo.jpg">
+  <meta property="og:image:alt" content="Logo van BuurthulpDeventer">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <style>
-    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/fredoka-latin-500-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/fredoka-latin-600-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/nunito-latin-400-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-latin-600-normal.woff2") format("woff2"); }
-    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/nunito-latin-700-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 500; font-display: swap; src: url("fredoka-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Fredoka"; font-style: normal; font-weight: 600; font-display: swap; src: url("fredoka-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 400; font-display: swap; src: url("nunito-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 600; font-display: swap; src: url("nunito-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Nunito"; font-style: normal; font-weight: 700; font-display: swap; src: url("nunito-latin-700-normal.woff2") format("woff2"); }
 
     :root {
       --green: #24ae94;
@@ -286,10 +297,60 @@
 
     .legal a:hover { text-decoration-thickness: 3px; }
     .legal a:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; border-radius: 4px; }
+  
+    /* Toegankelijkheid: toetsenbordnavigatie en mobiele aanraakdoelen. */
+    .skip-link {
+      position: fixed; top: 12px; left: 12px; z-index: 1000;
+      padding: 12px 16px; border: 2px solid var(--black); border-radius: 12px;
+      background: var(--yellow); color: var(--black); font-weight: 700;
+      transform: translateY(-180%); text-decoration: none;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .menu-panel[hidden] { display: none; }
+    .menu-panel a:focus-visible { outline: 3px solid var(--black); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .menu-button { min-height: 44px; }
+      .socials a { min-width: 44px; min-height: 44px; }
+    }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://buurthulpdeventer.com/#organisatie",
+        "name": "BuurthulpDeventer",
+        "url": "https://buurthulpdeventer.com/",
+        "logo": "https://buurthulpdeventer.com/bedrijfslogo.jpg",
+        "telephone": "+31-570-756230",
+        "email": "buurthulpdeventer@gmail.com",
+        "areaServed": {
+          "@type": "City",
+          "name": "Deventer"
+        },
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61590582818465",
+          "https://www.instagram.com/buurthulpdeventer/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://buurthulpdeventer.com/#website",
+        "name": "BuurthulpDeventer",
+        "url": "https://buurthulpdeventer.com/",
+        "inLanguage": "nl-NL",
+        "publisher": {
+          "@id": "https://buurthulpdeventer.com/#organisatie"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#inhoud">Direct naar inhoud</a>
   <main class="page">
     <header class="home-head">
       <div class="menu-wrap">
@@ -313,16 +374,16 @@
       <p class="tagline">Betrouwbare en laagdrempelige hulp bij kleine klusjes in en om het huis in Deventer en omgeving.</p>
 
       <div class="orbit" aria-hidden="true">
-        <img class="sticker" src="icoon-tas.png" alt="" width="354" height="354" style="--i:0; --l:6%; --t:4%; --s:34%;">
-        <img class="sticker" src="icoon-hond.png" alt="" width="354" height="354" style="--i:1; --l:52%; --t:0%; --s:30%;">
-        <img class="sticker" src="icoon-tablet.png" alt="" width="354" height="354" style="--i:2; --l:0%; --t:40%; --s:30%;">
-        <img class="sticker" src="icoon-mand.png" alt="" width="354" height="354" style="--i:3; --l:62%; --t:32%; --s:36%;">
-        <img class="sticker" src="icoon-planten.png" alt="" width="354" height="354" style="--i:4; --l:24%; --t:62%; --s:34%;">
-        <img class="sticker" src="icoon-tuin.png" alt="" width="354" height="354" style="--i:5; --l:68%; --t:72%; --s:26%;">
+        <img class="sticker" src="icoon-tas.png" alt="" width="354" height="354" style="--i:0; --l:6%; --t:4%; --s:34%;" decoding="async">
+        <img class="sticker" src="icoon-hond.png" alt="" width="354" height="354" style="--i:1; --l:52%; --t:0%; --s:30%;" decoding="async">
+        <img class="sticker" src="icoon-tablet.png" alt="" width="354" height="354" style="--i:2; --l:0%; --t:40%; --s:30%;" decoding="async">
+        <img class="sticker" src="icoon-mand.png" alt="" width="354" height="354" style="--i:3; --l:62%; --t:32%; --s:36%;" decoding="async">
+        <img class="sticker" src="icoon-planten.png" alt="" width="354" height="354" style="--i:4; --l:24%; --t:62%; --s:34%;" decoding="async">
+        <img class="sticker" src="icoon-tuin.png" alt="" width="354" height="354" style="--i:5; --l:68%; --t:72%; --s:26%;" decoding="async">
       </div>
     </header>
 
-    <nav class="choices" aria-label="Hoofdnavigatie">
+    <nav class="choices" id="inhoud" tabindex="-1" aria-label="Hoofdnavigatie">
       <a class="choice" href="/wie-zijn-wij">
         <span>
           <strong>Wie zijn wij?</strong>
