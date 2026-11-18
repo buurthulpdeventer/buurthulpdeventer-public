@@ -47,6 +47,20 @@ const home = pageText.get('index.html') || '';
 const ldjson = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
 check(Boolean(ldjson), 'Homepage: gestructureerde gegevens ontbreken');
 if (ldjson) try { JSON.parse(ldjson[1]); } catch { failures.push('Homepage: ongeldige JSON'); }
+const rates = pageText.get('tarieven.html') || '';
+// Controleer dat de actie alleen in de preview voorkomt en deel is van de tarievenkaart.
+if (home.includes('id="feestdagenactie-titel"')) {
+  check(home.includes('€10,00 per uur') && home.includes('€15,00 per uur') && home.includes('per kwartier'), 'Feestdagenactie homepage: tarieven of afrekenwijze ontbreken');
+  check(home.includes('href="/tarieven#feestdagen-tarieven"'), 'Feestdagenactie homepage: link naar actietarieven ontbreekt');
+  const cardStart = rates.indexOf('<div class="rates-card">');
+  const actionStart = rates.indexOf('<section id="feestdagen-tarieven" class="rates-seasonal"');
+  const cardEnd = rates.indexOf('</div>', actionStart);
+  check(cardStart >= 0 && actionStart > cardStart && cardEnd > actionStart, 'Feestdagentarieven moeten binnen de bestaande tarievenkaart staan');
+  check(rates.includes('€10,00/u') && rates.includes('€15,00/u') && rates.includes('€0,25/km'), 'Feestdagentarieven: bedrag of kilometervergoeding ontbreekt');
+  check(rates.includes('per kwartier') && rates.includes('per uur af, niet per kwartier'), 'Feestdagentarieven: afrekenwijze ontbreekt');
+  check(rates.includes('repeating-linear-gradient(') && rates.includes('rates-seasonal__stripe'), 'Feestdagentarieven: rood-wit patroon ontbreekt');
+  check(!rates.includes('Actietarief volgt'), 'Feestdagentarieven: oude tijdelijke prijstekst staat nog op de pagina');
+}
 const contact = pageText.get('contact.html') || '';
 check(contact.includes('id="contact-form"'), 'Contact: formulier ontbreekt');
 check(contact.includes('fetch(FORM_SCRIPT_URL'), 'Contact: verzendcode ontbreekt');
