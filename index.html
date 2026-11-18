@@ -312,6 +312,68 @@
       .menu-button { min-height: 44px; }
       .socials a { min-width: 44px; min-height: 44px; }
     }
+
+    /* ---------- tijdelijke feestdagenactie op de homepage ---------- */
+    .feestdagenactie {
+      margin-top: 30px;
+      padding: 34px 40px 38px;
+      border: 3px solid var(--black);
+      border-radius: 44px;
+      background: var(--cream);
+      color: var(--black);
+    }
+    .feestdagenactie__label {
+      display: inline-block;
+      margin: 0 0 16px;
+      padding: 8px 16px;
+      border-radius: 99px;
+      background: var(--black);
+      color: var(--yellow);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: 0.015em;
+    }
+    .feestdagenactie h2 {
+      margin: 0 0 14px;
+      font-family: var(--display);
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.15;
+      font-weight: 600;
+    }
+    .feestdagenactie p:not(.feestdagenactie__label) {
+      margin: 0 0 14px;
+      font-size: 22px;
+      line-height: 1.45;
+      max-width: 52em;
+    }
+    .feestdagenactie__periode { font-weight: 700; }
+    .feestdagenactie__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      margin-top: 10px;
+      padding: 14px 24px;
+      border-radius: 22px;
+      background: var(--black);
+      color: var(--yellow);
+      font-family: var(--display);
+      font-size: 24px;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+    }
+    .feestdagenactie__link:hover { text-decoration: underline; }
+    .feestdagenactie__link:focus-visible {
+      outline: 4px solid var(--green);
+      outline-offset: 4px;
+    }
+    @media (max-width: 760px) {
+      .feestdagenactie { margin-top: 20px; padding: 26px 24px 30px; border-radius: 38px; }
+      .feestdagenactie p:not(.feestdagenactie__label) { font-size: 20px; }
+      .feestdagenactie__link { display: flex; width: 100%; font-size: 22px; }
+    }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/">
   <script type="application/ld+json">
@@ -413,6 +475,14 @@
         <span class="badge" aria-hidden="true">→</span>
       </a>
     </nav>
+
+    <section class="feestdagenactie" aria-labelledby="feestdagenactie-titel">
+      <p class="feestdagenactie__label">🎄 TIJDELIJKE FEESTDAGENACTIE</p>
+      <h2 id="feestdagenactie-titel">Extra hulp rond de feestdagen</h2>
+      <p>Hulp nodig met boodschappen, kleine klusjes of het huis klaarmaken voor de feestdagen? Wij helpen graag in Deventer en omgeving.</p>
+      <p class="feestdagenactie__periode">Deze actie geldt alleen tijdens de feestdagen. Neem contact op om de mogelijkheden te bespreken.</p>
+      <a class="feestdagenactie__link" href="/contact">Vraag feestdagenhulp aan →</a>
+    </section>
 
     <footer class="socials" aria-label="Social media">
       <a href="https://www.facebook.com/profile.php?id=61590582818465" aria-label="Facebook">
