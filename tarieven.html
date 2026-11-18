@@ -344,6 +344,65 @@
       .menu-button { min-height: 44px; }
       .socials a { min-width: 44px; min-height: 44px; }
     }
+
+    /* ---------- tijdelijk feestdagentarief (concept) ---------- */
+    .feestdagen-tarieven {
+      margin-top: 36px;
+      padding: 34px 38px;
+      border: 3px solid var(--black);
+      border-radius: 44px;
+      background: var(--cream);
+      color: var(--black);
+      scroll-margin-top: 24px;
+    }
+    .feestdagen-tarieven__label {
+      display: inline-block;
+      margin: 0 0 16px;
+      padding: 8px 16px;
+      border-radius: 99px;
+      background: var(--black);
+      color: var(--yellow);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+    .feestdagen-tarieven h2 {
+      margin: 0 0 14px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.15;
+    }
+    .feestdagen-tarieven p:not(.feestdagen-tarieven__label) {
+      margin: 0 0 18px;
+      max-width: 58em;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+    .feestdagen-tarieven .rate-list {
+      margin: 22px 0;
+      padding: 12px 24px;
+      border-radius: 24px;
+      background: var(--yellow);
+    }
+    .feestdagen-tarieven .rate-list li {
+      align-items: center;
+    }
+    .feestdagen-tarieven .rate-price {
+      text-align: right;
+    }
+    .feestdagen-tarieven__note { font-weight: 700; }
+    @media (max-width: 760px) {
+      .feestdagen-tarieven { margin-top: 28px; padding: 26px 24px 28px; border-radius: 34px; }
+      .feestdagen-tarieven p:not(.feestdagen-tarieven__label) { font-size: 20px; }
+      .feestdagen-tarieven .rate-list { padding: 10px 16px; }
+      .feestdagen-tarieven .rate-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .feestdagen-tarieven .rate-price { text-align: left; white-space: normal; }
+    }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/tarieven">
 </head>
@@ -393,6 +452,20 @@
         <p>Op de tarieven is een KOR (kleineondernemersregeling) van toepassing. Hierdoor vragen wij geen BTW.</p>
         <p>Na de klus sturen wij een factuur via de mail. Wij vragen of deze binnen 14 dagen kan worden voldaan. Mocht dit niet lukken, dan kunt u contact met ons opnemen.</p>
       </div>
+    </section>
+
+
+    <section id="feestdagen-tarieven" class="feestdagen-tarieven" aria-labelledby="feestdagen-tarieven-titel">
+      <p class="feestdagen-tarieven__label">🎄 TIJDELIJKE FEESTDAGENACTIE</p>
+      <h2 id="feestdagen-tarieven-titel">Speciale tarieven voor de feestdagen</h2>
+      <p>Voor klusjes die direct met de feestdagen te maken hebben, betaalt u tijdelijk <strong>minder dan ons normale uurtarief van €15,00</strong>.</p>
+      <ul class="rate-list">
+        <li><span class="rate-name">Feestdagenklusjes</span><span class="rate-price">Actietarief volgt</span></li>
+        <li><span class="rate-name">Alle andere klusjes</span><span class="rate-price">€15,00/u</span></li>
+        <li><span class="rate-name">Kilometervergoeding</span><span class="rate-price">€0,25/km</span></li>
+      </ul>
+      <p>Het actietarief geldt bijvoorbeeld voor kerstversiering ophangen, boodschappen voor het kerstdiner en het huis voorbereiden op de feestdagen. Voor gewone boodschappen en andere klusjes geldt het reguliere tarief.</p>
+      <p class="feestdagen-tarieven__note">Deze korting geldt alleen rond de feestdagen. Het exacte actiebedrag wordt nog vastgesteld.</p>
     </section>
 
     <div class="pager">
