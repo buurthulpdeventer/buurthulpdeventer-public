@@ -348,12 +348,18 @@
       max-width: 52em;
     }
     .feestdagenactie__periode { font-weight: 700; }
+    .feestdagenactie__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+    }
     .feestdagenactie__link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-height: 56px;
-      margin-top: 10px;
+      margin: 0;
       padding: 14px 24px;
       border-radius: 22px;
       background: var(--black);
@@ -363,6 +369,11 @@
       line-height: 1.2;
       text-align: center;
       text-decoration: none;
+    }
+    .feestdagenactie__link--contact {
+      background: var(--yellow);
+      color: var(--black);
+      box-shadow: inset 0 0 0 3px var(--black);
     }
     .feestdagenactie__link:hover { text-decoration: underline; }
     .feestdagenactie__link:focus-visible {
@@ -481,7 +492,10 @@
       <h2 id="feestdagenactie-titel">Extra hulp rond de feestdagen</h2>
       <p>Voor klusjes die speciaal met de feestdagen te maken hebben, zoals kerstversiering ophangen of boodschappen voor het kerstdiner, betaalt u tijdelijk <strong>€10,00 per uur in plaats van €15,00 per uur</strong>.</p>
       <p class="feestdagenactie__periode">Feestdagenklusjes rekenen wij per uur af, niet per kwartier. Voor alle andere klusjes geldt het normale tarief van €15,00 per uur, afgerekend per kwartier. De kilometervergoeding blijft €0,25 per kilometer. Deze actie geldt alleen tijdens de feestdagen.</p>
-      <a class="feestdagenactie__link" href="/tarieven#feestdagen-tarieven">Bekijk de feestdagentarieven →</a>
+      <div class="feestdagenactie__actions">
+        <a class="feestdagenactie__link" href="/tarieven#feestdagen-tarieven">Bekijk de feestdagentarieven →</a>
+        <a class="feestdagenactie__link feestdagenactie__link--contact" href="/contact">Neem contact op →</a>
+      </div>
     </section>
 
     <footer class="socials" aria-label="Social media">
