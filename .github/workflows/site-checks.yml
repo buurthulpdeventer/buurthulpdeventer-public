@@ -18,6 +18,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Controleer websitebestanden
         run: node scripts/check-site.mjs
+      - name: Controleer Cloudflare-previewconfiguratie zonder deployment
+        run: |
+          npm install --no-audit --no-fund --ignore-scripts
+          npx wrangler deploy --dry-run --outdir /tmp/bdh-public-preview-build
 
   website-live:
     name: Live website (informatief)

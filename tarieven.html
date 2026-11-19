@@ -344,6 +344,73 @@
       .menu-button { min-height: 44px; }
       .socials a { min-width: 44px; min-height: 44px; }
     }
+
+
+    /* Feestdagenactie vormt het onderste deel van de bestaande tarievenkaart. */
+    .rates-card__note {
+      margin: 16px 2px 0;
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+    .rates-seasonal {
+      margin: 28px -38px -30px;
+      padding: 0 38px 30px;
+      border-radius: 0 0 44px 44px;
+      background: var(--cream);
+      scroll-margin-top: 20px;
+      overflow: hidden;
+    }
+    .rates-seasonal__stripe {
+      height: 24px;
+      margin: 0 -38px 24px;
+      background: repeating-linear-gradient(
+        135deg,
+        #b91c28 0,
+        #b91c28 15px,
+        #ffffff 15px,
+        #ffffff 30px
+      );
+    }
+    .rates-seasonal__label {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+    .rates-seasonal h3 {
+      margin: 0 0 16px;
+      font-family: var(--display);
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    .rates-seasonal p:not(.rates-seasonal__label) {
+      margin: 0 0 16px;
+      font-size: 20px;
+      line-height: 1.45;
+    }
+    .rates-seasonal p:last-child { margin-bottom: 0; }
+    .rates-seasonal .rate-list { margin: 12px 0 18px; }
+    .rates-seasonal .rate-list li { gap: 12px; }
+    @media (max-width: 760px) {
+      .rates-card__note { font-size: 19px; }
+      .rates-card > .rate-list li,
+      .rates-seasonal .rate-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .rates-seasonal {
+        margin: 24px -24px -22px;
+        padding: 0 24px 26px;
+        border-radius: 0 0 34px 34px;
+      }
+      .rates-seasonal__stripe { margin: 0 -24px 20px; }
+      .rates-seasonal h3 { font-size: 27px; }
+      .rates-seasonal p:not(.rates-seasonal__label) { font-size: 19px; }
+      .rates-seasonal .rate-price { white-space: normal; }
+    }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/tarieven">
 </head>
@@ -383,9 +450,24 @@
         <!-- ===== TARIEVEN: pas per regel de naam en het bedrag aan ===== -->
         <!-- Een regel toevoegen? Kopieer een hele <li>...</li> regel. Een regel weghalen? Verwijder de hele <li>...</li> regel. -->
         <ul class="rate-list">
-          <li><span class="rate-name">Uurloon</span><span class="rate-price">€15,00/u</span></li>
+          <li><span class="rate-name">Uurloon gewone klusjes</span><span class="rate-price">€15,00/u</span></li>
           <li><span class="rate-name">Kilometervergoeding</span><span class="rate-price">€0,25/km</span></li>
         </ul>
+        <p class="rates-card__note">Gewone klusjes rekenen wij per kwartier af.</p>
+
+        <section id="feestdagen-tarieven" class="rates-seasonal" aria-labelledby="feestdagen-tarieven-titel">
+          <div class="rates-seasonal__stripe" aria-hidden="true"></div>
+          <p class="rates-seasonal__label">🎄 TIJDELIJKE FEESTDAGENACTIE</p>
+          <h3 id="feestdagen-tarieven-titel">Feestdagenhulp voor €10,00 per uur</h3>
+          <p>Voor klusjes die speciaal met de feestdagen te maken hebben, geldt tijdelijk een lager tarief.</p>
+          <ul class="rate-list">
+            <li><span class="rate-name">Feestdagenklusjes</span><span class="rate-price">€10,00/u</span></li>
+            <li><span class="rate-name">Kilometervergoeding</span><span class="rate-price">€0,25/km</span></li>
+          </ul>
+          <p><strong>Feestdagenklusjes rekenen wij per uur af, niet per kwartier.</strong></p>
+          <p>Bijvoorbeeld voor kerstversiering ophangen, boodschappen voor het kerstdiner en het huis voorbereiden op de feestdagen.</p>
+          <p><strong>Alle andere klusjes blijven €15,00 per uur kosten, afgerekend per kwartier.</strong> Deze actie geldt alleen tijdens de feestdagen.</p>
+        </section>
       </div>
 
       <div class="text extra">
@@ -394,6 +476,7 @@
         <p>Na de klus sturen wij een factuur via de mail. Wij vragen of deze binnen 14 dagen kan worden voldaan. Mocht dit niet lukken, dan kunt u contact met ons opnemen.</p>
       </div>
     </section>
+
 
     <div class="pager">
       <a class="go go--back" href="/">
