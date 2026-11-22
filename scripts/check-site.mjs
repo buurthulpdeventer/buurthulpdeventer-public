@@ -57,7 +57,7 @@ if (home.includes('id="feestdagenactie-titel"')) {
   const cardEnd = rates.indexOf('</div>', actionStart);
   check(cardStart >= 0 && actionStart > cardStart && cardEnd > actionStart, 'Feestdagentarieven moeten binnen de bestaande tarievenkaart staan');
   check(rates.includes('€10,00/u') && rates.includes('€15,00/u') && rates.includes('€0,25/km'), 'Feestdagentarieven: bedrag of kilometervergoeding ontbreekt');
-  check(rates.includes('per kwartier') && rates.includes('per uur af, niet per kwartier'), 'Feestdagentarieven: afrekenwijze ontbreekt');
+  check(rates.includes('per kwartier') && rates.includes('per gewerkt uur af, niet per kwartier'), 'Feestdagentarieven: afrekenwijze ontbreekt');
   check(rates.includes('repeating-linear-gradient(') && rates.includes('rates-seasonal__stripe'), 'Feestdagentarieven: rood-wit patroon ontbreekt');
   check(!rates.includes('Actietarief volgt'), 'Feestdagentarieven: oude tijdelijke prijstekst staat nog op de pagina');
 }
