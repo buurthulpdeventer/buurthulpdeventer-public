@@ -256,6 +256,25 @@
       text-underline-offset: 5px;
       overflow-wrap: anywhere;
     }
+    .contact-direct-links {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px;
+    }
+    .contact-direct-links a {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 50px; padding: 12px 20px; border-radius: 18px;
+      background: var(--black); color: var(--yellow);
+      text-decoration: none; font-weight: 700; text-align: center;
+      font-size: 19px;
+    }
+    .contact-direct-links a:last-child { background: var(--yellow); color: var(--black); }
+    .contact-direct-links a:focus-visible { outline: 4px solid var(--green); outline-offset: 4px; }
+    @media(max-width: 760px) {
+      .contact-direct-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .contact-direct-links a { padding: 12px 9px; }
+    }
+    @media(max-width: 380px) {
+      .contact-direct-links { grid-template-columns: 1fr; }
+    }
 
     .contact-card {
       padding: 34px 38px 38px;
@@ -342,7 +361,7 @@
     @media (max-width: 860px) {
       .contact {
         grid-template-columns: 1fr;
-        grid-template-areas: "intro" "card" "direct";
+        grid-template-areas: "intro" "direct" "card";
       }
     }
 
@@ -430,7 +449,7 @@
 
     <section id="inhoud" tabindex="-1" class="content contact" aria-label="Contact">
       <div class="text intro">
-        <p>Als u uw gegevens achterlaat, nemen wij zo snel mogelijk contact met u op.</p>
+        <p>Heeft u een vraag of wilt u hulp aanvragen? Bel ons, stuur een WhatsApp-bericht of vul het formulier in. Wij nemen zo snel mogelijk contact met u op.</p>
       </div>
 
       <div class="contact-card">
@@ -446,8 +465,8 @@
           </div>
 
           <div class="row">
-            <label>E-mailadres *
-              <input type="email" name="email" autocomplete="email" required>
+            <label>E-mailadres (niet verplicht)
+              <input type="email" name="email" autocomplete="email">
             </label>
             <label>Adres
               <input type="text" name="adres" autocomplete="street-address">
@@ -457,6 +476,7 @@
           <label>Telefoonnummer *
             <input type="tel" name="telefoon" autocomplete="tel" required>
           </label>
+          <p class="form-note">Een e-mailadres is niet nodig. Met uw telefoonnummer kunnen wij u terugbellen.</p>
 
           <label>Hoe lang denkt u dat wij met de klus bezig zijn?
             <input type="text" name="tijdsinschatting">
@@ -481,10 +501,11 @@
       </div>
 
       <div class="text direct">
-        <p>U kunt ons ook mailen via: <a href="mailto:buurthulpdeventer@gmail.com">buurthulpdeventer@gmail.com</a> of bellen via: <a href="tel:0570-756230">(0570)-756230</a></p>
-      </div>
-      <div class="text direct">
-        <p><Br><Br><Br></Br>Bij vragen kunt u ook altijd contact opnemen via bovenstaande contactgegevens.</p>
+        <p>Rechtstreeks contact is ook mogelijk via telefoon of WhatsApp. E-mailen kan naar <a href="mailto:buurthulpdeventer@gmail.com">buurthulpdeventer@gmail.com</a>.</p>
+        <div class="contact-direct-links">
+          <a href="tel:+31570756230" aria-label="Bel BuurthulpDeventer">☎ Bel ons</a>
+          <a href="https://wa.me/31570756230" target="_blank" rel="noopener noreferrer" aria-label="Stuur BuurthulpDeventer een WhatsApp-bericht">WhatsApp ons</a>
+        </div>
       </div>
     </section>
 
