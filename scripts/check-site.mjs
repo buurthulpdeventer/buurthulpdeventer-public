@@ -48,17 +48,36 @@ const ldjson = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/scr
 check(Boolean(ldjson), 'Homepage: gestructureerde gegevens ontbreken');
 if (ldjson) try { JSON.parse(ldjson[1]); } catch { failures.push('Homepage: ongeldige JSON'); }
 const rates = pageText.get('tarieven.html') || '';
-// Controleer dat de actie alleen in de preview voorkomt en deel is van de tarievenkaart.
+// Compacte feestdagenkaart met apart, toegankelijk uitklapbaar voorwaardenblok.
 if (home.includes('id="feestdagenactie-titel"')) {
-  check(home.includes('€10,00 per uur') && home.includes('€15,00 per uur') && home.includes('per kwartier'), 'Feestdagenactie homepage: tarieven of afrekenwijze ontbreken');
+  check(home.includes('€10,00 per uur') && home.includes('€15,00'), 'Feestdagenactie homepage: correcte actieprijs ontbreekt');
   check(home.includes('href="/tarieven#feestdagen-tarieven"'), 'Feestdagenactie homepage: link naar actietarieven ontbreekt');
+  check(home.includes('href="/tarieven#feestdagen-voorwaarden">Voorwaarden</a>'), 'Feestdagenactie homepage: aparte voorwaardenlink ontbreekt');
+  const homeAction = home.split('<section class="feestdagenactie"')[1]?.split('</section>')[0] || '';
+  check(!homeAction.includes('per kwartier') && !homeAction.includes('kilometervergoeding'), 'Feestdagenactie homepage is niet compact');
   const cardStart = rates.indexOf('<div class="rates-card">');
   const actionStart = rates.indexOf('<section id="feestdagen-tarieven" class="rates-seasonal"');
-  const cardEnd = rates.indexOf('</div>', actionStart);
-  check(cardStart >= 0 && actionStart > cardStart && cardEnd > actionStart, 'Feestdagentarieven moeten binnen de bestaande tarievenkaart staan');
-  check(rates.includes('€10,00/u') && rates.includes('€15,00/u') && rates.includes('€0,25/km'), 'Feestdagentarieven: bedrag of kilometervergoeding ontbreekt');
-  check(rates.includes('per kwartier') && rates.includes('per gewerkt uur af, niet per kwartier'), 'Feestdagentarieven: afrekenwijze ontbreekt');
-  check(rates.includes('repeating-linear-gradient(') && rates.includes('rates-seasonal__stripe'), 'Feestdagentarieven: rood-wit patroon ontbreekt');
+  const actionEnd = rates.indexOf('</section>', actionStart);
+  const cardEnd = rates.indexOf('</div>', actionEnd);
+  const conditionsStart = rates.indexOf('<details class="rates-terms" id="feestdagen-voorwaarden">');
+  const action = rates.slice(actionStart, actionEnd);
+  check(cardStart >= 0 && actionStart > cardStart && actionEnd > actionStart && cardEnd > actionEnd,
+    'Feestdagentarieven moeten binnen de bestaande tarievenkaart staan');
+  check(conditionsStart > cardEnd, 'Feestdagenvoorwaarden moeten buiten de tarievenkaart staan');
+  check(action.includes('€10,00/u') && !action.includes('per kwartier') &&
+    action.includes('href="#feestdagen-voorwaarden">Voorwaarden</a>'),
+    'Actiekaart tarieven is te uitgebreid of mist de voorwaardenlink');
+  check(rates.includes('€15,00/u') && rates.includes('€0,25/km'), 'Normaal tarief of kilometervergoeding ontbreekt');
+  check(rates.includes('€10,00 per gewerkt uur, afgerekend per uur en niet per kwartier'),
+    'Feestdagenvoorwaarden: afrekenwijze ontbreekt');
+  check(rates.includes('Vraag naar de exacte geldigheidsperiode.') &&
+    rates.includes('Wij bevestigen vóór het maken van een afspraak'),
+    'Feestdagenvoorwaarden: toepasselijkheid of geldigheidsperiode ontbreekt');
+  check(rates.includes('repeating-linear-gradient(') && rates.includes('rates-seasonal__stripe'),
+    'Feestdagentarieven: rood-wit patroon ontbreekt');
+  check(rates.includes("feestdagenVoorwaarden.open = true") &&
+    rates.includes("window.addEventListener('hashchange', openFeestdagenVoorwaarden)"),
+    'Feestdagenvoorwaarden openen niet direct via de link');
   check(!rates.includes('Actietarief volgt'), 'Feestdagentarieven: oude tijdelijke prijstekst staat nog op de pagina');
 }
 const contact = pageText.get('contact.html') || '';
@@ -74,8 +93,8 @@ for (const [name, page] of [['Homepage', home], ['Contact', contact]]) {
 }
 check(contact.includes('new FormData(form)'), 'Contact: formulier verstuurt niet alle velden, inclusief optioneel e-mailadres');
 check(contact.includes('Een e-mailadres is niet nodig.'), 'Contact: uitleg over optioneel e-mailadres ontbreekt');
-check(home.includes('We bevestigen vóór het maken van een afspraak'), 'Actie: voorafgaande tariefbevestiging ontbreekt');
-check(rates.includes('Vraag naar de precieze actieperiode.'), 'Actie: geldigheidsperiode is onvoldoende toegelicht');
+check(rates.includes('Wij bevestigen vóór het maken van een afspraak'), 'Actie: voorafgaande tariefbevestiging ontbreekt');
+check(rates.includes('Vraag naar de exacte geldigheidsperiode.'), 'Actie: geldigheidsperiode is onvoldoende toegelicht');
 const privacy=pageText.get('privacyverklaring.html')||'';
 check(privacy.includes('uiterlijk 6 maanden na het laatste contact'), 'Privacy: doelbewaartermijn contactverzoeken ontbreekt');
 check(privacy.includes('moet daarom door ons handmatig gebeuren'), 'Privacy: handmatige verwijdering ontbreekt');
