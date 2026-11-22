@@ -313,6 +313,31 @@
       .socials a { min-width: 44px; min-height: 44px; }
     }
 
+    /* ---------- feestdagenhulp en direct contact ---------- */
+    .snel-contact {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      flex-wrap: wrap; margin-top: 24px; padding: 22px 26px;
+      border: 3px solid var(--black); border-radius: 28px; background: var(--cream);
+    }
+    .snel-contact p { margin: 0; font-size: 20px; line-height: 1.35; font-weight: 700; }
+    .snel-contact__links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .snel-contact__links a {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 52px; padding: 11px 18px; border-radius: 18px;
+      text-decoration: none; background: var(--black); color: var(--yellow);
+      font-size: 20px; font-weight: 700;
+    }
+    .snel-contact__links a:last-child { background: var(--yellow); color: var(--black); }
+    .snel-contact__links a:focus-visible { outline: 4px solid var(--green); outline-offset: 4px; }
+    @media (max-width: 760px) {
+      .snel-contact { padding: 18px; }
+      .snel-contact__links { width: 100%; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+      .snel-contact__links a { font-size: 18px; min-width: 0; }
+    }
+    @media (max-width: 380px) {
+      .snel-contact__links { grid-template-columns: 1fr; }
+    }
+
     /* ---------- tijdelijke feestdagenactie op de homepage ---------- */
     .feestdagenactie {
       margin-top: 30px;
@@ -487,11 +512,20 @@
       </a>
     </nav>
 
+    <section class="snel-contact" aria-label="Direct contact met BuurthulpDeventer">
+      <p>Een vraag of een klusje? Neem direct contact met ons op.</p>
+      <div class="snel-contact__links">
+        <a href="tel:+31570756230" aria-label="Bel BuurthulpDeventer">☎ Bel ons</a>
+        <a href="https://wa.me/31570756230" target="_blank" rel="noopener noreferrer" aria-label="Stuur BuurthulpDeventer een WhatsApp-bericht">WhatsApp ons</a>
+      </div>
+    </section>
+
     <section class="feestdagenactie" aria-labelledby="feestdagenactie-titel">
       <p class="feestdagenactie__label">🎄 TIJDELIJKE FEESTDAGENACTIE</p>
       <h2 id="feestdagenactie-titel">Extra hulp rond de feestdagen</h2>
       <p>Voor klusjes die speciaal met de feestdagen te maken hebben, zoals kerstversiering ophangen of boodschappen voor het kerstdiner, betaalt u tijdelijk <strong>€10,00 per uur in plaats van €15,00 per uur</strong>.</p>
-      <p class="feestdagenactie__periode">Feestdagenklusjes rekenen wij per uur af, niet per kwartier. Voor alle andere klusjes geldt het normale tarief van €15,00 per uur, afgerekend per kwartier. De kilometervergoeding blijft €0,25 per kilometer. Deze actie geldt alleen tijdens de feestdagen.</p>
+      <p class="feestdagenactie__periode">Dit actietarief is uitsluitend bedoeld voor klusjes die direct met kerst en de jaarwisseling te maken hebben. Het geldt niet automatisch voor alle werkzaamheden tijdens de feestdagen. We bevestigen vóór het maken van een afspraak of het actietarief op uw klus en de gewenste dag van toepassing is.</p>
+      <p>Feestdagenklusjes rekenen wij per gewerkt uur af, niet per kwartier. Andere klusjes kosten €15,00 per uur en worden per kwartier afgerekend. De kilometervergoeding blijft €0,25 per kilometer. Vraag vooraf naar de precieze geldigheidsperiode.</p>
       <div class="feestdagenactie__actions">
         <a class="feestdagenactie__link" href="/tarieven#feestdagen-tarieven">Bekijk de feestdagentarieven →</a>
         <a class="feestdagenactie__link feestdagenactie__link--contact" href="/contact">Neem contact op →</a>
