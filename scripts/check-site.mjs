@@ -64,9 +64,22 @@ if (home.includes('id="feestdagenactie-titel"')) {
 const contact = pageText.get('contact.html') || '';
 check(contact.includes('id="contact-form"'), 'Contact: formulier ontbreekt');
 check(contact.includes('fetch(FORM_SCRIPT_URL'), 'Contact: verzendcode ontbreekt');
-check(/name="email"[^>]*required/.test(contact), 'Contact: vereist e-mailveld ontbreekt');
+check(/<input type="email" name="email" autocomplete="email">/.test(contact), 'Contact: optioneel e-mailveld ontbreekt');
+check(/<input type="tel" name="telefoon"[^>]*required>/.test(contact), 'Contact: vereist telefoonnummer ontbreekt');
 check(/name="hulpvraag"[^>]*required/.test(contact), 'Contact: vereist hulpvraagveld ontbreekt');
 check(contact.includes('href="/privacyverklaring"'), 'Contact: privacyverklaring ontbreekt');
+for (const [name, page] of [['Homepage', home], ['Contact', contact]]) {
+  check(page.includes('href="tel:+31570756230"'), name + ': directe belknop ontbreekt');
+  check(page.includes('href="https://wa.me/31570756230"'), name + ': directe WhatsApp-knop ontbreekt');
+}
+check(contact.includes('new FormData(form)'), 'Contact: formulier verstuurt niet alle velden, inclusief optioneel e-mailadres');
+check(contact.includes('Een e-mailadres is niet nodig.'), 'Contact: uitleg over optioneel e-mailadres ontbreekt');
+check(home.includes('We bevestigen vóór het maken van een afspraak'), 'Actie: voorafgaande tariefbevestiging ontbreekt');
+check(rates.includes('Vraag naar de precieze actieperiode.'), 'Actie: geldigheidsperiode is onvoldoende toegelicht');
+const privacy=pageText.get('privacyverklaring.html')||'';
+check(privacy.includes('uiterlijk 6 maanden na het laatste contact'), 'Privacy: doelbewaartermijn contactverzoeken ontbreekt');
+check(privacy.includes('moet daarom door ons handmatig gebeuren'), 'Privacy: handmatige verwijdering ontbreekt');
+check(privacy.includes('tijdelijk in beveiligde back-ups staan'), 'Privacy: bewaartermijn back-ups ontbreekt');
 check(existsSync(join(root, 'robots.txt')), 'robots.txt ontbreekt');
 check(existsSync(join(root, 'sitemap.xml')), 'sitemap.xml ontbreekt');
 if (existsSync(join(root, 'robots.txt'))) check(get('robots.txt').includes('Sitemap: https://buurthulpdeventer.com/sitemap.xml'), 'robots.txt verwijst niet naar sitemap');
