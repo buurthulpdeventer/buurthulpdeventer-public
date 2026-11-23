@@ -421,6 +421,60 @@
       .feestdagenactie__link { display: flex; width: 100%; font-size: 19px; }
       .feestdagenactie__link--voorwaarden { font-size: 18px; min-height: 44px; }
     }
+  
+    /* ---------- reviewverzoek: verwijst rechtstreeks naar Google ---------- */
+    .review-section {
+      margin-top: 24px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      border-radius: 32px;
+      background: var(--yellow);
+      color: var(--black);
+    }
+    .review-section__tekst { flex: 1 1 370px; min-width: 0; }
+    .review-section h2 {
+      margin: 0 0 8px;
+      font-family: var(--display);
+      font-size: clamp(27px, 3.4vw, 36px);
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    .review-section p {
+      margin: 0;
+      max-width: 40em;
+      font-size: 19px;
+      line-height: 1.4;
+    }
+    .review-section__actie { flex: 0 1 275px; display: grid; gap: 10px; }
+    .review-section__knop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 12px 20px;
+      border-radius: 18px;
+      background: var(--black);
+      color: var(--yellow);
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 21px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .review-section__knop:hover { text-decoration: underline; }
+    .review-section__knop:focus-visible { outline: 4px solid var(--green); outline-offset: 4px; }
+    .review-section .review-section__uitleg { font-size: 15px; line-height: 1.35; }
+    @media (max-width: 760px) {
+      .review-section { margin-top: 20px; padding: 22px 20px; gap: 18px; border-radius: 28px; }
+      .review-section__tekst, .review-section__actie { flex-basis: 100%; }
+      .review-section p { font-size: 18px; }
+      .review-section__knop { width: 100%; font-size: 20px; }
+    }
+
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/">
   <script type="application/ld+json">
@@ -475,6 +529,7 @@
         <a href="/wat-doen-wij">Wat doen wij?</a>
         <a href="/tarieven">Tarieven</a>
         <a href="/contact">Neem contact op</a>
+        <a href="/#beoordeling">Beoordeling geven</a>
         </nav>
       </div>
 
@@ -539,6 +594,18 @@
         <a class="feestdagenactie__link" href="/tarieven#feestdagen-tarieven">Bekijk het actietarief →</a>
         <a class="feestdagenactie__link feestdagenactie__link--contact" href="/contact">Neem contact op →</a>
         <a class="feestdagenactie__link feestdagenactie__link--voorwaarden" href="/tarieven#feestdagen-voorwaarden">Voorwaarden</a>
+      </div>
+    </section>
+
+    
+    <section class="review-section" id="beoordeling" aria-labelledby="beoordeling-titel">
+      <div class="review-section__tekst">
+        <h2 id="beoordeling-titel">Hoe heeft u onze hulp ervaren?</h2>
+        <p>Heeft BuurthulpDeventer u geholpen? Deel uw eerlijke ervaring op Google. Zo kunnen anderen beter inschatten of onze hulp bij hen past.</p>
+      </div>
+      <div class="review-section__actie">
+        <a class="review-section__knop" href="https://g.page/r/CfPAcqHVk6cdEBM/review" target="_blank" rel="noopener noreferrer" aria-label="Schrijf een beoordeling over BuurthulpDeventer op Google (opent in een nieuw tabblad)">Schrijf een Google-review ↗</a>
+        <p class="review-section__uitleg">U schrijft uw beoordeling op Google. De website van Google opent in een nieuw tabblad.</p>
       </div>
     </section>
 
