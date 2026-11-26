@@ -356,6 +356,7 @@
     }
   </style>
   <link rel="canonical" href="https://buurthulpdeventer.com/wat-doen-wij">
+  <link rel="stylesheet" href="/analytics-consent.css">
 </head>
 <body>
   <a class="skip-link" href="#inhoud">Direct naar inhoud</a>
@@ -457,6 +458,7 @@
     <nav class="legal" aria-label="Bedrijfsgegevens en privacy">
       <a href="/bedrijfsgegevens">Bedrijfsgegevens</a>
       <a href="/privacyverklaring">Privacyverklaring</a>
+      <button type="button" id="bdh-cookie-settings" hidden>Cookie-instellingen</button>
       <a href="https://admin.buurthulpdeventer.com/"
    target="_blank"
    rel="noopener noreferrer">
@@ -500,5 +502,16 @@
       }
     });
   </script>
+  <section id="bdh-cookie-banner" aria-labelledby="bdh-cookie-title" hidden>
+    <h2 id="bdh-cookie-title">Analytische cookies</h2>
+    <p>Met uw toestemming gebruiken wij Google Analytics om websitebezoeken en contactklikken te meten. We gebruiken dit niet voor gepersonaliseerde reclame. Weigeren heeft geen invloed op de website.</p>
+    <p>U kunt uw keuze altijd wijzigen via ‘Cookie-instellingen’ onderaan elke pagina. Lees onze <a href="/privacyverklaring#analytics-cookies">privacyverklaring</a>.</p>
+    <div class="bdh-cookie-actions">
+      <button type="button" id="bdh-cookie-reject">Weigeren</button>
+      <button type="button" id="bdh-cookie-accept">Accepteren</button>
+    </div>
+  </section>
+  <div id="bdh-cookie-space" aria-hidden="true"></div>
+  <script src="/analytics-consent.js" defer></script>
 </body>
 </html>

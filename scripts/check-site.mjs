@@ -43,6 +43,18 @@ for (const page of pages) {
   for (const [, font] of html.matchAll(/url\(["']([^"']+\.woff2)["']\)/g)) check(existsSync(join(root, font)), prefix('lettertype ontbreekt: ' + font));
   for (const tag of html.match(/<img\b[^>]*>/g) || []) check(/\balt="[^"]*"/.test(tag), prefix('afbeelding zonder alt-attribuut'));
 }
+// Dezelfde opt-in op alle publieke pagina's; nooit een direct geladen Google-tag.
+for (const [page, html] of pageText) {
+  check(html.includes('<link rel="stylesheet" href="/analytics-consent.css">'), page + ': cookiestijl ontbreekt');
+  check(html.includes('<script src="/analytics-consent.js" defer></script>'), page + ': toestemmingsscript ontbreekt');
+  check(html.includes('id="bdh-cookie-banner" aria-labelledby="bdh-cookie-title" hidden'), page + ': cookiebanner niet standaard verborgen');
+  check(html.includes('id="bdh-cookie-settings" hidden') && html.includes('id="bdh-cookie-reject"') && html.includes('id="bdh-cookie-accept"'), page + ': cookie-instellingen of keuze ontbreekt');
+  check(!html.includes('googletagmanager.com/gtag/js'), page + ': Google-tag mag niet rechtstreeks worden geladen');
+}
+check(existsSync(join(root,'analytics-consent.js')), 'Analytics-toestemmingsscript ontbreekt');
+check(existsSync(join(root,'analytics-consent.css')), 'Analytics-stijlbestand ontbreekt');
+check((pageText.get('contact.html')||'').includes("if (data.result === 'success') {\n          window.BDHAnalytics?.lead();"), 'Leadmeting mag alleen na bevestigde verzending plaatsvinden');
+check((pageText.get('privacyverklaring.html')||'').includes('id="analytics-cookies"'), 'Privacy: Analytics-uitleg ontbreekt');
 const home = pageText.get('index.html') || '';
 const ldjson = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
 check(Boolean(ldjson), 'Homepage: gestructureerde gegevens ontbreken');
