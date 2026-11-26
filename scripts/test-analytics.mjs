@@ -15,7 +15,7 @@ function harness({hostname='buurthulpdeventer.com',saved=null,search='',referrer
   const win={addEventListener(n,f){handlers[n]=f;}};
   const storage={getItem:k=>state.get(k)||null,setItem:(k,v)=>state.set(k,v)};
   vm.runInNewContext(source,{window:win,document:doc,location:loc,localStorage:storage,Date,URL,URLSearchParams});
-  return {win,loc,nodes,scripts,cookies,state,handlers,docHandlers,click(id){nodes['bdh-cookie-'+id].events.click();},link(href){docHandlers.click({target:{closest:()=>({getAttribute:()=>href})}});},events(){return (win.dataLayer||[]).map(x=>Array.from(x));}};
+  return {win,loc,nodes,scripts,cookies,state,handlers,docHandlers,click(id){nodes['bdh-cookie-'+id].events.click();},link(href){docHandlers.click({target:{closest:()=>({getAttribute:()=>href})}});},events(){return Array.from(win.dataLayer||[],x=>Array.from(x));}};
 }
 test('No Google script or event until affirmative consent, and refusal stays private',()=>{
   const h=harness();
