@@ -1,0 +1,32 @@
+/* Compacte toestemmingsbanner in de bestaande huisstijl. */
+#bdh-cookie-banner[hidden], #bdh-cookie-settings[hidden] { display: none !important; }
+#bdh-cookie-banner {
+  position: fixed; z-index: 1100; left: max(12px, env(safe-area-inset-left));
+  right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom));
+  margin: 0 auto; width: auto; max-width: 680px; box-sizing: border-box;
+  max-height: 55vh; max-height: 55dvh; overflow: auto;
+  padding: 19px 22px; border: 2px solid #050505; border-radius: 24px;
+  background: #fff9d8; color: #050505; box-shadow: 0 8px 32px #0003;
+  font-family: var(--body, sans-serif); font-size: 17px; line-height: 1.45;
+}
+#bdh-cookie-banner h2 { color: #050505; font-family: var(--display, sans-serif); font-size: 23px; margin: 0 0 8px; line-height: 1.2; }
+#bdh-cookie-banner p { margin: 0 0 10px; font-size: 17px; }
+#bdh-cookie-banner a { color: #050505; text-decoration: underline; text-underline-offset: 3px; }
+.bdh-cookie-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.bdh-cookie-actions button {
+  appearance: none; min-width: 0; min-height: 48px; padding: 10px 12px;
+  border: 2px solid #050505; border-radius: 14px; background: #fff69a;
+  color: #050505; font: inherit; font-weight: 700; cursor: pointer;
+}
+#bdh-cookie-settings { appearance:none; background:transparent; color:#050505; border:0;
+  font: inherit; font-size:18px; font-weight:600; padding:8px 4px; cursor:pointer;
+  text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px;
+}
+#bdh-cookie-banner :focus-visible, #bdh-cookie-settings:focus-visible { outline:3px solid #050505; outline-offset:3px; }
+#bdh-cookie-space { height:0; pointer-events:none; }
+@media(max-width: 760px) {
+  #bdh-cookie-banner { padding:16px; border-radius:20px; }
+  #bdh-cookie-banner h2 { font-size:21px; }
+  #bdh-cookie-banner p, .bdh-cookie-actions button { font-size:16px; }
+}
+@media(max-width: 340px) { .bdh-cookie-actions { grid-template-columns:1fr; } }
