@@ -55,7 +55,13 @@ check(existsSync(join(root,'analytics-consent.js')), 'Analytics-toestemmingsscri
 check(existsSync(join(root,'analytics-consent.css')), 'Analytics-stijlbestand ontbreekt');
 check((pageText.get('contact.html')||'').includes("if (data.result === 'success') {\n          window.BDHAnalytics?.lead();"), 'Leadmeting mag alleen na bevestigde verzending plaatsvinden');
 check((pageText.get('privacyverklaring.html')||'').includes('id="analytics-cookies"'), 'Privacy: Analytics-uitleg ontbreekt');
+for (const [page, html] of pageText) {
+  const menu = html.match(/<nav class="menu-panel"[^>]*>[\s\S]*?<\/nav>/)?.[0] || '';
+  check(Boolean(menu), page + ': hamburgermenu ontbreekt');
+  check(!/Beoordeling geven|#beoordeling/i.test(menu), page + ': beoordeling hoort niet in het hamburgermenu');
+}
 const home = pageText.get('index.html') || '';
+check(home.includes('id="beoordeling"') && home.includes('https://g.page/r/CfPAcqHVk6cdEBM/review'), 'Homepage: bestaande Google-reviewknop ontbreekt');
 const ldjson = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
 check(Boolean(ldjson), 'Homepage: gestructureerde gegevens ontbreken');
 if (ldjson) try { JSON.parse(ldjson[1]); } catch { failures.push('Homepage: ongeldige JSON'); }
